@@ -47,7 +47,7 @@ def generate_launch_description():
         )
         .sensors_3d(
             file_path=os.path.join(
-                get_package_share_directory("moveit2_tutorials"),
+                get_package_share_directory("perception_pipeline"),
                 "config/sensors_3d.yaml",
             )
         )

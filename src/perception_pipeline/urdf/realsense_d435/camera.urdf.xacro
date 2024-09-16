@@ -37,7 +37,7 @@
         <visual>
             <origin xyz="${d435_cam_mount_from_center_offset} ${-d435_cam_depth_py} 0" rpy="${pi/2} 0 ${pi/2}"/>
             <geometry>
-                <mesh filename="$(find moveit2_tutorials)/meshes/d435.dae" />
+                <mesh filename="$(find perception_pipeline)/meshes/d435.dae" />
             </geometry>
         </visual>
         <collision>

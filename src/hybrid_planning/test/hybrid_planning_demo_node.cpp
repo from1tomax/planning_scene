@@ -303,10 +303,10 @@ int main(int argc, char** argv)
     // This sleep isn't necessary but it gives humans time to process what's going on
     rclcpp::sleep_for(5s);
     demo.run();
-  });
+  });//启动一个新的线程 先睡眠5s，然后启动函数run
 
   rclcpp::spin(node);
-  run_demo.join();
+  run_demo.join();//确保主程序在等待run_demo结束后继续运行
   rclcpp::shutdown();
   return 0;
 }

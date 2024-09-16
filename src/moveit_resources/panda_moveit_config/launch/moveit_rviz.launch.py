@@ -45,7 +45,7 @@ def generate_launch_description():
 
     # RViz
     tutorial_mode = LaunchConfiguration("rviz_tutorial")
-    rviz_base = os.path.join(get_package_share_directory("moveit2_tutorials"), "launch")
+    rviz_base = os.path.join(get_package_share_directory("perception_pipeline"), "launch")
     rviz_full_config = os.path.join(rviz_base, "panda_moveit_config_demo.rviz")
     rviz_empty_config = os.path.join(rviz_base, "panda_moveit_config_demo_empty.rviz")
     rviz_node_tutorial = Node(
