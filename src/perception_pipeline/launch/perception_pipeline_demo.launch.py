@@ -42,8 +42,8 @@ def generate_launch_description():
         )
         .trajectory_execution(file_path="config/gripper_moveit_controllers.yaml")
         .planning_pipelines(
-            # pipelines=["ompl", "chomp", "pilz_industrial_motion_planner", "stomp"]
-            pipelines=["ompl", "chomp", "pilz_industrial_motion_planner"]
+            pipelines=["ompl", "chomp", "pilz_industrial_motion_planner", "stomp"]
+            # pipelines=["ompl", "chomp", "pilz_industrial_motion_planner"]
         )
         .sensors_3d(
             file_path=os.path.join(
