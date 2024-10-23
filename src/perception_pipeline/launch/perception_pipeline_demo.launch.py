@@ -102,11 +102,17 @@ def generate_launch_description():
     )
 
     # ros2_control using FakeSystem as hardware
+    # ros2_controllers_path = os.path.join(
+    #     get_package_share_directory("moveit_resources_panda_moveit_config"),
+    #     "config",
+    #     "ros2_controllers.yaml",
+    # )
     ros2_controllers_path = os.path.join(
-        get_package_share_directory("moveit_resources_panda_moveit_config"),
-        "config",
-        "ros2_controllers.yaml",
+    get_package_share_directory("moveit_hybrid_planning"),
+    "config",
+    "demo_controller.yaml",
     )
+    
     ros2_control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
@@ -133,11 +139,11 @@ def generate_launch_description():
         arguments=["panda_arm_controller", "-c", "/controller_manager"],
     )
 
-    panda_hand_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["panda_hand_controller", "-c", "/controller_manager"],
-    )
+    # panda_hand_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["panda_hand_controller", "-c", "/controller_manager"],
+    # )
 
     return LaunchDescription(
         [
@@ -150,6 +156,6 @@ def generate_launch_description():
             ros2_control_node,
             joint_state_broadcaster_spawner,
             panda_arm_controller_spawner,
-            panda_hand_controller_spawner,
+            # panda_hand_controller_spawner,
         ]
     )

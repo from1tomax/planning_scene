@@ -19,6 +19,18 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(trajectory_msgs REQUIRED)
+# more dependencies when involving "perception"
+find_package(Eigen3 REQUIRED)
+find_package(Boost REQUIRED system filesystem date_time thread)
+find_package(control_msgs REQUIRED)
+# find_package(moveit_task_constructor_core REQUIRED)
+find_package(moveit_ros_perception REQUIRED)
+find_package(moveit_visual_tools REQUIRED)
+find_package(geometric_shapes REQUIRED)
+find_package(pcl_ros REQUIRED)
+find_package(pcl_conversions REQUIRED)
+find_package(tf2_eigen REQUIRED)
+find_package(tf2_geometry_msgs REQUIRED)
 
 set(LIBRARIES
   # Components
@@ -46,6 +58,15 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   std_srvs
   tf2_ros
   trajectory_msgs
+  #involving "perception"
+  ament_cmake
+  rviz_visual_tools
+  moveit_visual_tools
+  interactive_markers
+  tf2_geometry_msgs
+  Eigen3
+  Boost
+  control_msgs
 )
 
 set(THIS_PACKAGE_INCLUDE_DIRS
@@ -63,6 +84,7 @@ add_subdirectory(hybrid_planning_manager)
 add_subdirectory(global_planner)
 add_subdirectory(local_planner)
 add_subdirectory(test)
+add_subdirectory(perception)
 
 rclcpp_components_register_nodes(moveit_hybrid_planning_manager "moveit::hybrid_planning::HybridPlanningManager")
 rclcpp_components_register_nodes(moveit_global_planner_component "moveit::hybrid_planning::GlobalPlannerComponent")

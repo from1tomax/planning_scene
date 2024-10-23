@@ -89,54 +89,54 @@ public:
     hp_action_client_ =
         rclcpp_action::create_client<moveit_msgs::action::HybridPlanner>(node_, hybrid_planning_action_name);
 
-    collision_object_1_.header.frame_id = "panda_link0";
-    collision_object_1_.id = "box1";
+    // collision_object_1_.header.frame_id = "panda_link0";
+    // collision_object_1_.id = "box1";
 
-    collision_object_2_.header.frame_id = "panda_link0";
-    collision_object_2_.id = "box2";
+    // collision_object_2_.header.frame_id = "panda_link0";
+    // collision_object_2_.id = "box2";
 
-    collision_object_3_.header.frame_id = "panda_link0";
-    collision_object_3_.id = "box3";
+    // collision_object_3_.header.frame_id = "panda_link0";
+    // collision_object_3_.id = "box3";
 
-    box_1_.type = box_1_.BOX;
-    box_1_.dimensions = { 0.5, 0.8, 0.01 };
+    // box_1_.type = box_1_.BOX;
+    // box_1_.dimensions = { 0.5, 0.8, 0.01 };
 
-    box_2_.type = box_2_.BOX;
-    box_2_.dimensions = { 1.0, 0.4, 0.01 };
+    // box_2_.type = box_2_.BOX;
+    // box_2_.dimensions = { 1.0, 0.4, 0.01 };
 
     // Add new collision object as soon as global trajectory is available.
     global_solution_subscriber_ = node_->create_subscription<moveit_msgs::msg::MotionPlanResponse>(
         "global_trajectory", rclcpp::SystemDefaultsQoS(),
         [this](const moveit_msgs::msg::MotionPlanResponse::ConstSharedPtr& /* unused */) {
           // Remove old collision objects
-          collision_object_1_.operation = collision_object_1_.REMOVE;
+          // collision_object_1_.operation = collision_object_1_.REMOVE;
 
-          // Add new collision objects
-          geometry_msgs::msg::Pose box_pose_2;
-          box_pose_2.position.x = 0.2;
-          box_pose_2.position.y = 0.4;
-          box_pose_2.position.z = 0.95;
+          // // Add new collision objects
+          // geometry_msgs::msg::Pose box_pose_2;
+          // box_pose_2.position.x = 0.2;
+          // box_pose_2.position.y = 0.4;
+          // box_pose_2.position.z = 0.95;
 
-          collision_object_2_.primitives.push_back(box_2_);
-          collision_object_2_.primitive_poses.push_back(box_pose_2);
-          collision_object_2_.operation = collision_object_2_.ADD;
+          // collision_object_2_.primitives.push_back(box_2_);
+          // collision_object_2_.primitive_poses.push_back(box_pose_2);
+          // collision_object_2_.operation = collision_object_2_.ADD;
 
-          geometry_msgs::msg::Pose box_pose_3;
-          box_pose_3.position.x = 0.2;
-          box_pose_3.position.y = -0.4;
-          box_pose_3.position.z = 0.95;
+          // geometry_msgs::msg::Pose box_pose_3;
+          // box_pose_3.position.x = 0.2;
+          // box_pose_3.position.y = -0.4;
+          // box_pose_3.position.z = 0.95;
 
-          collision_object_3_.primitives.push_back(box_2_);
-          collision_object_3_.primitive_poses.push_back(box_pose_3);
-          collision_object_3_.operation = collision_object_3_.ADD;
+          // collision_object_3_.primitives.push_back(box_2_);
+          // collision_object_3_.primitive_poses.push_back(box_pose_3);
+          // collision_object_3_.operation = collision_object_3_.ADD;
 
-          // Add object to planning scene
-          {  // Lock PlanningScene
-            planning_scene_monitor::LockedPlanningSceneRW scene(planning_scene_monitor_);
-            scene->processCollisionObjectMsg(collision_object_2_);
-            scene->processCollisionObjectMsg(collision_object_3_);
-            scene->processCollisionObjectMsg(collision_object_1_);
-          }  // Unlock PlanningScene
+          // // Add object to planning scene
+          // {  // Lock PlanningScene
+          //   planning_scene_monitor::LockedPlanningSceneRW scene(planning_scene_monitor_);
+          //   scene->processCollisionObjectMsg(collision_object_2_);
+          //   scene->processCollisionObjectMsg(collision_object_3_);
+          //   scene->processCollisionObjectMsg(collision_object_1_);
+          // }  // Unlock PlanningScene
         });
   }
 
@@ -159,7 +159,8 @@ public:
       planning_scene_monitor_->setPlanningScenePublishingFrequency(100);
       planning_scene_monitor_->startPublishingPlanningScene(planning_scene_monitor::PlanningSceneMonitor::UPDATE_SCENE,
                                                             "/planning_scene");
-      planning_scene_monitor_->startSceneMonitor();
+      planning_scene_monitor_->startSceneMonitor("/monitored_planning_scene");
+      // planning_scene_monitor_->startSceneMonitor();
     }
 
     if (!planning_scene_monitor_->waitForCurrentRobotState(node_->now(), 5))
@@ -174,20 +175,20 @@ public:
       return;
     }
 
-    geometry_msgs::msg::Pose box_pose;
-    box_pose.position.x = 0.4;
-    box_pose.position.y = 0.0;
-    box_pose.position.z = 0.85;
+    // geometry_msgs::msg::Pose box_pose;
+    // box_pose.position.x = 0.4;
+    // box_pose.position.y = 0.0;
+    // box_pose.position.z = 0.85;
 
-    collision_object_1_.primitives.push_back(box_1_);
-    collision_object_1_.primitive_poses.push_back(box_pose);
-    collision_object_1_.operation = collision_object_1_.ADD;
+    // collision_object_1_.primitives.push_back(box_1_);
+    // collision_object_1_.primitive_poses.push_back(box_pose);
+    // collision_object_1_.operation = collision_object_1_.ADD;
 
-    // Add object to planning scene
-    {  // Lock PlanningScene
-      planning_scene_monitor::LockedPlanningSceneRW scene(planning_scene_monitor_);
-      scene->processCollisionObjectMsg(collision_object_1_);
-    }  // Unlock PlanningScene
+    // // Add object to planning scene
+    // {  // Lock PlanningScene
+    //   planning_scene_monitor::LockedPlanningSceneRW scene(planning_scene_monitor_);
+    //   scene->processCollisionObjectMsg(collision_object_1_);
+    // }  // Unlock PlanningScene
 
     RCLCPP_INFO(LOGGER, "Wait 2s for the collision object");
     rclcpp::sleep_for(2s);
@@ -205,25 +206,28 @@ public:
     robot_state->setToDefaultValues(joint_model_group, "ready");
     robot_state->update();
     // Lock the planning scene as briefly as possible
-    {
-      planning_scene_monitor::LockedPlanningSceneRW locked_planning_scene(planning_scene_monitor_);
-      locked_planning_scene->setCurrentState(*robot_state);
-    }
+    // {
+    //   planning_scene_monitor::LockedPlanningSceneRW locked_planning_scene(planning_scene_monitor_);
+    //   locked_planning_scene->setCurrentState(*robot_state);
+    // }
 
     // Create desired motion goal
     moveit_msgs::msg::MotionPlanRequest goal_motion_request;
 
     moveit::core::robotStateToRobotStateMsg(*robot_state, goal_motion_request.start_state);
     goal_motion_request.group_name = planning_group;
-    goal_motion_request.num_planning_attempts = 10;
+    // goal_motion_request.num_planning_attempts = 10;
+    goal_motion_request.num_planning_attempts = 20;
     goal_motion_request.max_velocity_scaling_factor = 0.1;
     goal_motion_request.max_acceleration_scaling_factor = 0.1;
-    goal_motion_request.allowed_planning_time = 2.0;
+    goal_motion_request.allowed_planning_time = 5.0;
     goal_motion_request.planner_id = "ompl";
     goal_motion_request.pipeline_id = "ompl";
 
     moveit::core::RobotState goal_state(robot_model);
-    std::vector<double> joint_values = { 0.0, 0.0, 0.0, 0.0, 0.0, 1.571, 0.785 };
+    // std::vector<double> joint_values = { 0.0, 0.0, 0.0, 0.0, 0.0, 1.571, 0.785 };
+    // std::vector<double> joint_values = { 0.855, -1.762, 1.378, -2.58, -1.64, 1.832, -1.431 };
+    std::vector<double> joint_values = { 2.83, 0.24, -0.33, -1.62, 0.09, 1.78, 0.0};
     goal_state.setJointGroupPositions(joint_model_group, joint_values);
 
     goal_motion_request.goal_constraints.resize(1);
@@ -244,7 +248,61 @@ public:
 
     auto send_goal_options = rclcpp_action::Client<moveit_msgs::action::HybridPlanner>::SendGoalOptions();
     send_goal_options.result_callback =
-        [](const rclcpp_action::ClientGoalHandle<moveit_msgs::action::HybridPlanner>::WrappedResult& result) {
+        [this, robot_model, joint_model_group, planning_group](const rclcpp_action::ClientGoalHandle<moveit_msgs::action::HybridPlanner>::WrappedResult& result) {
+      //     // *** 添加第二个目标的位置开始 ***
+      //           if (result.code == rclcpp_action::ResultCode::SUCCEEDED)
+      // {
+      //     RCLCPP_INFO(LOGGER, "First hybrid planning goal succeeded. Sending second goal...");
+
+      //     // *** 添加第二个目标的位置开始 ***
+      //     // 创建第二个目标
+      //     moveit_msgs::msg::MotionPlanRequest goal_motion_request_2;  
+      //     moveit::core::RobotState goal_state_2(robot_model);
+      //     std::vector<double> joint_values_2 = { 0.5, -1.5, 1.2, -2.0, -1.2, 1.5, -1.0 };
+      //     goal_state_2.setJointGroupPositions(joint_model_group, joint_values_2);
+      //     moveit::core::robotStateToRobotStateMsg(goal_state_2, goal_motion_request_2.start_state);
+      //     goal_motion_request_2.group_name = planning_group;
+      //     goal_motion_request_2.goal_constraints.resize(1);
+      //     goal_motion_request_2.goal_constraints[0] =
+      //         kinematic_constraints::constructGoalConstraints(goal_state_2, joint_model_group);
+      //     goal_motion_request_2.max_velocity_scaling_factor = 0.1;
+      //     goal_motion_request_2.max_acceleration_scaling_factor = 0.1;
+      //     goal_motion_request_2.allowed_planning_time = 5.0;    
+      //     goal_motion_request_2.planner_id = "ompl";
+      //     goal_motion_request_2.pipeline_id = "ompl";
+
+
+      //     moveit_msgs::msg::MotionSequenceItem sequence_item_2;
+      //     sequence_item_2.req = goal_motion_request_2;
+      //     sequence_item_2.blend_radius = 0.0;
+
+      //     moveit_msgs::msg::MotionSequenceRequest sequence_request_2;
+      //     sequence_request_2.items.push_back(sequence_item_2);
+
+      //     auto goal_action_request_2 = moveit_msgs::action::HybridPlanner::Goal();
+      //     goal_action_request_2.planning_group = planning_group;
+      //     goal_action_request_2.motion_sequence = sequence_request_2;
+
+      //     auto send_goal_options_2 = rclcpp_action::Client<moveit_msgs::action::HybridPlanner>::SendGoalOptions();
+      //     send_goal_options_2.result_callback = [](const rclcpp_action::ClientGoalHandle<moveit_msgs::action::HybridPlanner>::WrappedResult& result) {
+      //         if (result.code == rclcpp_action::ResultCode::SUCCEEDED)
+      //         {
+      //             RCLCPP_INFO(LOGGER, "Second hybrid planning goal succeeded.");
+      //         }
+      //         else
+      //         {
+      //             RCLCPP_ERROR(LOGGER, "Second hybrid planning goal failed.");
+      //         }
+      //     };
+
+      //     // 发送第二个目标
+      //     auto goal_handle_future_2 = hp_action_client_->async_send_goal(goal_action_request_2, send_goal_options_2);
+      // }
+      // else
+      // {
+      //     RCLCPP_ERROR(LOGGER, "First hybrid planning goal failed.");
+      // }
+      // // *** 添加第二个目标的位置结束 ***
           switch (result.code)
           {
             case rclcpp_action::ResultCode::SUCCEEDED:
@@ -301,7 +359,7 @@ int main(int argc, char** argv)
   HybridPlanningDemo demo(node);
   std::thread run_demo([&demo]() {
     // This sleep isn't necessary but it gives humans time to process what's going on
-    rclcpp::sleep_for(5s);
+    rclcpp::sleep_for(2s);
     demo.run();
   });//启动一个新的线程 先睡眠5s，然后启动函数run
 

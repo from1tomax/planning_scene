@@ -11,7 +11,7 @@ import math
 
 def generate_launch_description():
     urdf_file = os.path.join(
-        get_package_share_directory("perception_pipeline"),
+        get_package_share_directory("moveit_hybrid_planning"),
         "urdf/realsense_d435/camera.urdf.xacro",
     )
 
@@ -133,10 +133,9 @@ def generate_launch_description():
         ),
         launch_arguments={
             "world": os.path.join(
-                get_package_share_directory("perception_pipeline"),
+                get_package_share_directory("moveit_hybrid_planning"),
                 "worlds",
                 "perception_pipeline_demo.world",
-                # "greenMachine.world"
             ),
         }.items(),
     )
